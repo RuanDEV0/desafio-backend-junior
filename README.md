@@ -29,7 +29,7 @@ Visualizar um resumo do valor total investido em todos os ativos e também o val
 Comando que deve exibir um resumo da carteira de investimentos do usuário. O objetivo é mostrar o valor total da carteira e o valor total alocado por ativos.
 
 ### Requisitos
-- Utilização da linguagem de programação C# e o framework .NET Core na sua última versão
+- Utilização da linguagem de programação JAVA.
 - Versionamento no Github
 - Implementação de um menu numérico que apresenta todas as operações possíveis e também a opção de saída da aplicação. Esse menu será exibido na inicialização da aplicação
 
