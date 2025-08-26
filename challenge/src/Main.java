@@ -83,10 +83,6 @@ public class Main {
         System.out.println("-> 0 - Retornar ao menu");
         scanner.next();
     }
-
-    /*Esse comando servirá para informar a venda de um ativo. O usuário irá informar o código do ativo e
-    quantas unidades ele vendeu. O usuário não deve conseguir vender ativos que não existem na carteira.*/
-
     public static void reportSale() {
 
         System.out.println("\n ==> Informar venda do ativo ==> \n");
