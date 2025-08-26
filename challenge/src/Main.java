@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -6,10 +7,11 @@ public class Main {
 
         int op;
         do {
-
+            space();
             System.out.println("<========================> \n" +
                     "-> 1 - Salvar novo ativo \n" +
                     "-> 2 - Listar ativos \n" +
+                    "-> 3 - Informar venda\n" +
                     "-> 0 - Sair da aplicacao \n" +
                     "\n" +
                     "-> Informe sua opcao(Numero): ");
@@ -24,6 +26,9 @@ public class Main {
                     space();
                     listActives();
                     break;
+                case 3:
+                    space();
+                    reportSale();
                 case 0:
                     break;
                 default:
@@ -46,8 +51,6 @@ public class Main {
             System.out.println("-> Informe o valor por unitario: ");
             active.setPrice(Double.parseDouble(scanner.next()));
 
-            System.out.println(active.getPrice() * active.getQuantity());
-
             ActiveService.save(active);
 
             System.out.println("\n => Adicionado com sucesso");
@@ -66,7 +69,7 @@ public class Main {
         var list = ActiveService.getActiveList();
 
         if(list.isEmpty()){
-            System.out.println("--> List vazia!");
+            System.out.println("\n--> List vazia!");
         }
 
         list.forEach(active ->  System.out.println(
@@ -79,6 +82,39 @@ public class Main {
 
         System.out.println("-> 0 - Retornar ao menu");
         scanner.next();
+    }
+
+    /*Esse comando servirá para informar a venda de um ativo. O usuário irá informar o código do ativo e
+    quantas unidades ele vendeu. O usuário não deve conseguir vender ativos que não existem na carteira.*/
+
+    public static void reportSale() {
+
+        System.out.println("\n ==> Informar venda do ativo ==> \n");
+        System.out.println("-> Informe o codigo do ativo: ");
+        String code = scanner.next();
+
+        System.out.println("-> Informe a quantidade: ");
+        int quantity = scanner.nextInt();
+
+        if(!ActiveService.existsActiveByCode(code)){
+            System.out.println("Erro: ativo inexistente");
+            scanner.next();
+        }else{
+
+            var active = ActiveService.getActiveByCode(code);
+
+            if(active != null && active.getQuantity() >= quantity){
+                ActiveService.reportSale(code, quantity);
+
+                System.out.println("\n ==> Vendido com sucesso");
+                System.out.println("\n-> 0 - Retornar ao menu");
+
+                scanner.next();
+            }else{
+                System.out.println("Erro: quantidade de ativo inexistente");
+                scanner.next();
+            }
+        }
     }
 
     public static void space(){
