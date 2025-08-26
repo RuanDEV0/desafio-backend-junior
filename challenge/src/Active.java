@@ -1,16 +1,14 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Active {
     private String code;
     private int quantity;
     private double price;
-    private double priceTotal = price * quantity;
-    private final LocalDateTime dateBuy = LocalDateTime.now();
+    private double priceTotal;
+    private final LocalDate dateBuy = LocalDate.now();
 
-    public Active(String code, int quantity, double price) {
-        this.code = code;
-        this.quantity = quantity;
-        this.price = price;
+    public Active() {
     }
 
     public String getCode() {
@@ -37,22 +35,16 @@ public class Active {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "Active{" +
-                "code='" + code + '\'' +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                ", priceTotal=" + priceTotal +
-                ", dateBuy=" + dateBuy +
-                '}';
-    }
-
     public double getPriceTotal() {
-        return priceTotal;
+        return quantity * price;
     }
 
     public void setPriceTotal(double priceTotal) {
         this.priceTotal = priceTotal;
+    }
+
+    public String getDateBuy() {
+        DateTimeFormatter pattern = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return dateBuy.format(pattern);
     }
 }
