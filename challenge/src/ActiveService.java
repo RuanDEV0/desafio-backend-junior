@@ -42,4 +42,20 @@ public class ActiveService {
         return null;
     }
 
+    public static String investmentSummary(){
+        double valueTotal = 0;
+
+        for (Active active : activeList){
+            valueTotal += active.getPriceTotal();
+        }
+
+        StringBuilder result = new StringBuilder();
+
+        for (Active active : activeList){
+            result.append("\n -------- \n" + "Codigo: ").append(active.getCode()).append("\nValor alocado: ").append(active.getPriceTotal()).append(" \n --------");
+        }
+
+        return " Valor Carteira: " + valueTotal +
+                "\n Ativos: " + result;
+    }
 }

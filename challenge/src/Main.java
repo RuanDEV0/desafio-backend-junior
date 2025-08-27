@@ -2,17 +2,18 @@ import java.util.Scanner;
 
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
 
         int op;
-        try{
+        try {
 
             do {
-                space();
                 System.out.println("<========================> \n" +
                         "-> 1 - Salvar novo ativo \n" +
                         "-> 2 - Listar ativos \n" +
                         "-> 3 - Informar venda\n" +
+                        "-> 4 - Resumo da Carteira \n" +
                         "-> 0 - Sair da aplicacao \n" +
                         "\n" +
                         "-> Informe sua opcao(Numero): ");
@@ -30,23 +31,30 @@ public class Main {
                     case 3:
                         space();
                         reportSale();
+                        break;
+                    case 4:
+                        space();
+                        investmentSummary();
+                        break;
                     case 0:
+                        System.out.println(" !! Saindo da aplicacao !! ");
                         break;
                     default:
                         System.err.println("Erro: opcao incorreta");
                 }
+                space();
             } while (op != 0);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             System.err.println("Erro: " + e + " " + e.getMessage());
-        }finally {
+        } finally {
             scanner.close();
         }
     }
 
     public static void saveActive() {
         Active active = new Active();
-        try{
+        try {
 
             System.out.println("\n ==> Adicionar ativo <=== \n");
             System.out.println("-> Informe o codigo do ativo: ");
@@ -59,35 +67,36 @@ public class Main {
             ActiveService.save(active);
 
             System.out.println("\n => Adicionado com sucesso");
-            System.out.println("\n -> 0 - Retornar ao menu" );
+            System.out.println("\n -> 0 - Retornar ao menu");
             scanner.next();
 
-        }catch(Exception e){
+        } catch (Exception e) {
             System.err.println("Erro: input incorreto " + e.getMessage());
         }
 
     }
 
-    public static void listActives(){
+    public static void listActives() {
 
         System.out.println("\n ==> Listar ativos da carteira ===> ");
         var list = ActiveService.getActiveList();
 
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             System.out.println("\n--> List vazia!");
         }
 
-        list.forEach(active ->  System.out.println(
+        list.forEach(active -> System.out.println(
                 "\n Codigo: " + active.getCode() +
-                "\n Valor Unitario: " + active.getPrice() +
-                "\n Valo Total: " + active.getPriceTotal() +
-                "\n Data de Compra: " + active.getDateBuy() +
+                        "\n Valor Unitario: " + active.getPrice() +
+                        "\n Valo Total: " + active.getPriceTotal() +
+                        "\n Data de Compra: " + active.getDateBuy() +
                         " \n ----------------\n"
         ));
 
         System.out.println("-> 0 - Retornar ao menu");
         scanner.next();
     }
+
     public static void reportSale() {
 
         System.out.println("\n ==> Informar venda do ativo ==> \n");
@@ -97,30 +106,39 @@ public class Main {
         System.out.println("-> Informe a quantidade: ");
         int quantity = scanner.nextInt();
 
-        if(!ActiveService.existsActiveByCode(code)){
+        if (!ActiveService.existsActiveByCode(code)) {
             System.out.println("Erro: ativo inexistente");
             scanner.next();
-        }else{
+        } else {
 
             var active = ActiveService.getActiveByCode(code);
 
-            if(active != null && active.getQuantity() >= quantity){
+            if (active != null && active.getQuantity() >= quantity) {
                 ActiveService.reportSale(code, quantity);
 
                 System.out.println("\n ==> Vendido com sucesso");
                 System.out.println("\n-> 0 - Retornar ao menu");
 
                 scanner.next();
-            }else{
+            } else {
                 System.out.println("Erro: quantidade de ativo inexistente");
                 scanner.next();
             }
         }
     }
 
-    public static void space(){
-        for(int i = 0; i < 10; i++){
+    public static void space() {
+        for (int i = 0; i < 10; i++) {
             System.out.println();
         }
     }
+
+    public static void investmentSummary(){
+        System.out.println("\n ==> Resumo da Carteria ===> \n");
+        System.out.println(ActiveService.investmentSummary());
+
+        System.out.println("-> 0 - Retornar ao menu");
+        scanner.next();
+    }
+
 }
