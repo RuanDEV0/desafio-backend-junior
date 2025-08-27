@@ -1,4 +1,3 @@
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -6,37 +5,43 @@ public class Main {
     public static void main(String[] args) {
 
         int op;
-        do {
-            space();
-            System.out.println("<========================> \n" +
-                    "-> 1 - Salvar novo ativo \n" +
-                    "-> 2 - Listar ativos \n" +
-                    "-> 3 - Informar venda\n" +
-                    "-> 0 - Sair da aplicacao \n" +
-                    "\n" +
-                    "-> Informe sua opcao(Numero): ");
+        try{
 
-            op = scanner.nextInt();
-            switch (op) {
-                case 1:
-                    space();
-                    saveActive();
-                    break;
-                case 2:
-                    space();
-                    listActives();
-                    break;
-                case 3:
-                    space();
-                    reportSale();
-                case 0:
-                    break;
-                default:
-                    System.err.println("Erro: opcao incorreta");
-            }
-        } while (op != 0);
+            do {
+                space();
+                System.out.println("<========================> \n" +
+                        "-> 1 - Salvar novo ativo \n" +
+                        "-> 2 - Listar ativos \n" +
+                        "-> 3 - Informar venda\n" +
+                        "-> 0 - Sair da aplicacao \n" +
+                        "\n" +
+                        "-> Informe sua opcao(Numero): ");
 
-        scanner.close();
+                op = scanner.nextInt();
+                switch (op) {
+                    case 1:
+                        space();
+                        saveActive();
+                        break;
+                    case 2:
+                        space();
+                        listActives();
+                        break;
+                    case 3:
+                        space();
+                        reportSale();
+                    case 0:
+                        break;
+                    default:
+                        System.err.println("Erro: opcao incorreta");
+                }
+            } while (op != 0);
+
+        }catch(Exception e){
+            System.err.println("Erro: " + e.getMessage());
+        }finally {
+            scanner.close();
+        }
     }
 
     public static void saveActive() {
