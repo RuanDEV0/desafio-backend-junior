@@ -38,7 +38,7 @@ public class Main {
             } while (op != 0);
 
         }catch(Exception e){
-            System.err.println("Erro: " + e.getMessage());
+            System.err.println("Erro: " + e + " " + e.getMessage());
         }finally {
             scanner.close();
         }
@@ -63,7 +63,7 @@ public class Main {
             scanner.next();
 
         }catch(Exception e){
-            System.err.println("Erro: input incorreto " + e.getLocalizedMessage());
+            System.err.println("Erro: input incorreto " + e.getMessage());
         }
 
     }
