@@ -1,43 +1,63 @@
-# Desafio: Terminal de Gerenciamento de Investimentos [Off] [Estagiário] [Junior]
+# Documentação da Aplicação de Gerenciamento de Ativos
 
-## Contexto
-Ativos financeiros representam a posse de um direito econômico que pode gerar lucro ao longo do tempo. Os ativos possuem preço, identificação, titular, tipo (ações, títulos do tesouro direto, títulos de CDB, etc...) e podem ser negociados no mercado financeiro dependendo da política de cada tipo. Também são conhecidos como "papéis" embora sejam títulos digitais intangíveis. Um ativo financeiro pode aumentar de rentabilidade ao longo do tempo, por exemplo, quem comprou uma ação da Empresa A na bolsa da Nasdaq no dia 2 de novembro de 2020, pagou $52,95. Hoje esse mesmo ativo está valendo $69,33 representando uma rentabilidade de %30,93 para o titular.
+Esta documentação descreve os métodos principais da classe `Main` de uma aplicação em Java para gerenciar uma carteira de investimentos.
 
-Aplicativos de carteira de investimentos são muito comuns no mercado financeiro quando estamos falando do gerenciamento de ativos financeiros. A ideia é ajudar investidores a manterem sua lista de ativos comprados, rendimento, valor total por ativo, tipo de operação, etc…
+---
 
-## Desafio
-Criar uma aplicação de carteira de investimentos que receba entradas e responda operações, funcionando pelo terminal de execução da aplicação (uma aplicação de console).
+### `main(String[] args)`
 
-Você não precisa se preocupar em fazer uma API web service ou persistir os dados de entrada informados pelo usuário num banco de dados, os dados podem ser mantidos em memória durante a execução do programa. É preciso informar um conjunto de dados que pode ser usado para testes.
+Este é o **ponto de entrada** da aplicação. Ele inicia a interface de usuário em modo console, apresentando um menu interativo que permite ao usuário escolher entre várias opções. O menu é exibido repetidamente em um loop `do-while` até que o usuário decida sair.
 
-Essa aplicação deverá suportar as operações descritas abaixo:
+-   **Função**: Exibe o menu principal e gerencia a navegação entre as funcionalidades.
+-   **Controle de Fluxo**: Usa um `switch` para direcionar a execução para o método correspondente à opção escolhida.
+-   **Robustez**: Inclui um bloco `try-catch-finally` para tratar erros de entrada inesperados e garantir que os recursos (como o `Scanner`) sejam fechados corretamente.
 
-Adicionar um novo ativo na carteira:
+---
 
-O usuário informa os dados de entrada contendo o código do ativo que foi comprado (ex.: STNE, GOOG, PGRM), quantidade de ativos e o valor pago por cada unidade do ativo
+### `saveActive()`
 
-Visualizar a lista de ativos investidos
+Permite ao usuário **adicionar um novo ativo** à carteira.
 
-Semelhante a um extrato bancário, esse comando deverá exibir uma lista de ativos investidos, informando código, preço de cada unidade do ativo, valor total alocado no ativo e data de compra.
+-   **Entrada**: Solicita o código, a quantidade e o preço unitário do ativo.
+-   **Processamento**: Cria um objeto `Active` com os dados inseridos e chama o método `ActiveService.save()` para persistir as informações.
+-   **Feedback**: Fornece uma mensagem de sucesso ou um alerta de erro caso a entrada seja inválida.
 
-Informar a venda de um ativo
+---
 
-Esse comando servirá para informar a venda de um ativo. O usuário irá informar o código do ativo e quantas unidades ele vendeu. O usuário não deve conseguir vender ativos que não existem na carteira.
+### `listActives()`
 
-Visualizar um resumo do valor total investido em todos os ativos e também o valor investido em cada ativo
+Exibe a **lista completa de todos os ativos** da carteira.
 
-Comando que deve exibir um resumo da carteira de investimentos do usuário. O objetivo é mostrar o valor total da carteira e o valor total alocado por ativos.
+-   **Processamento**: Obtém a lista de ativos através do método `ActiveService.getActiveList()`.
+-   **Saída**:
+    -   Se a lista estiver vazia, exibe uma mensagem indicando **"Lista vazia!"**.
+    -   Caso contrário, percorre a lista e imprime os detalhes de cada ativo, incluindo código, valor unitário, valor total e a data da compra.
 
-### Requisitos
-- Utilização da linguagem de programação JAVA.
-- Versionamento no Github
-- Implementação de um menu numérico que apresenta todas as operações possíveis e também a opção de saída da aplicação. Esse menu será exibido na inicialização da aplicação
+---
 
-Opção de retornar ao menu em todos os comandos
+### `reportSale()`
 
-### O que iremos avaliar:
-- Funcionalidade da aplicação - Ok
-- Teste unitários
-- Documentação dos comandos
-- Validação de comandos
-- Entrega do desafio
+Permite ao usuário **registrar a venda** de uma quantidade específica de um ativo existente.
+
+-   **Entrada**: Solicita o código do ativo e a quantidade que será vendida.
+-   **Validação**:
+    -   Primeiro, verifica se o ativo existe na carteira.
+    -   Em seguida, checa se a quantidade a ser vendida é menor ou igual à quantidade disponível.
+-   **Processamento**: Se a validação for bem-sucedida, chama `ActiveService.reportSale()` para processar a transação.
+-   **Feedback**: Exibe uma mensagem de sucesso ou um erro, caso o ativo não seja encontrado ou a quantidade seja insuficiente.
+
+---
+
+### `investmentSummary()`
+
+Calcula e exibe um **resumo do valor total** da carteira de investimentos.
+
+-   **Processamento**: Invoca o método `ActiveService.investmentSummary()` para obter o valor consolidado da carteira.
+-   **Saída**: Imprime o resultado na tela do console.
+
+---
+
+### Métodos Auxiliares
+
+-   `space()`: Um método simples para **limpar a tela** do console, imprimindo dez linhas em branco para melhorar a organização visual.
+-   `optionReturnSummary()`: Método privado que **padroniza a mensagem** de retorno ao menu principal, evitando a repetição de código. Ele exibe **"-> 0 - Retornar ao menu"** e aguarda a próxima entrada do usuário.
