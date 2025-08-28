@@ -36,7 +36,7 @@ Comando que deve exibir um resumo da carteira de investimentos do usuário. O ob
 Opção de retornar ao menu em todos os comandos
 
 ### O que iremos avaliar:
-- Funcionalidade da aplicação
+- Funcionalidade da aplicação - Ok
 - Teste unitários
 - Documentação dos comandos
 - Validação de comandos

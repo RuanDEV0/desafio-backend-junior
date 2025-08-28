@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Main {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
 
@@ -67,8 +67,7 @@ public class Main {
             ActiveService.save(active);
 
             System.out.println("\n => Adicionado com sucesso");
-            System.out.println("\n -> 0 - Retornar ao menu");
-            scanner.next();
+            optionReturnSummary();
 
         } catch (Exception e) {
             System.err.println("Erro: input incorreto " + e.getMessage());
@@ -93,8 +92,7 @@ public class Main {
                         " \n ----------------\n"
         ));
 
-        System.out.println("-> 0 - Retornar ao menu");
-        scanner.next();
+        optionReturnSummary();
     }
 
     public static void reportSale() {
@@ -117,12 +115,10 @@ public class Main {
                 ActiveService.reportSale(code, quantity);
 
                 System.out.println("\n ==> Vendido com sucesso");
-                System.out.println("\n-> 0 - Retornar ao menu");
-
-                scanner.next();
+                optionReturnSummary();
             } else {
                 System.out.println("Erro: quantidade de ativo inexistente");
-                scanner.next();
+                scanner.nextLine();
             }
         }
     }
@@ -137,8 +133,13 @@ public class Main {
         System.out.println("\n ==> Resumo da Carteria ===> \n");
         System.out.println(ActiveService.investmentSummary());
 
+        optionReturnSummary();
+    }
+
+    private static void optionReturnSummary(){
         System.out.println("-> 0 - Retornar ao menu");
         scanner.next();
     }
+
 
 }
